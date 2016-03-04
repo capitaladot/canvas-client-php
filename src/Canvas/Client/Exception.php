@@ -32,13 +32,6 @@ class CanvasClientException extends CanvasException
 		parent::__construct($message, $code, $previous);
 	}
 	
-	public function setResponse(Zend_Http_Response $response)
-	{
-		$this->_response = $response;
-		$this->code = $response->getStatus();
-		$this->message .= " ({$this->code} {$response->getMessage()})";
-	}
-	
 	public function getResponse()
 	{
 		return $this->_response;

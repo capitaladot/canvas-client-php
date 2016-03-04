@@ -1,4 +1,6 @@
 <?php
-class OCAD_Canvas_Exception extends Exception
+namespace Canvas;
+
+class CanvasException extends \Exception
 {
 }
