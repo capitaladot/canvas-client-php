@@ -1,6 +1,6 @@
 <?php
 
-namespace Canvas;
+namespace Canvas\Client;
  
 class CanvasClientException extends CanvasException
 {

@@ -25,6 +25,7 @@
         "classmap": [
           "psr-4": {
             "Canvas\\": "src/Canvas/"
+			"Canvas\\Client": "src/Canvas/Client"
         }]
     }
   }  
