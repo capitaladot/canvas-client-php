@@ -1,0 +1,31 @@
+{
+    "name": "capitaladot/canvas-client-php",
+    "description": "A Canvas LMS API client for PHP.",
+    "keywords": ["canvas","LMS","LTI"],
+    "license": "MIT",
+    "homepage": "https://github.com/capitaladot/canvas-client-php",
+    "support": {
+        "issues": "https://github.com/laravel/framework/issues",
+        "source": "https://github.com/laravel/framework"
+    },
+    "authors": [
+        {
+            "name": "christoper-b",
+            "email": "christoper-b@github.com"
+        },
+        {
+            "name": "capitaladot",
+            "email": "aclerkin@e-idsolutions.com"
+        }
+    ],
+    "require": {
+      "guzzle/guzzle" : "*"
+    },
+     "autoload": {
+        "classmap": [
+          "psr-4": {
+            "Canvas\\": "src/Canvas/"
+        }]
+    }
+  }  
+    
