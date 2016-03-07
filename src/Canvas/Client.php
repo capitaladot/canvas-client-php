@@ -18,22 +18,22 @@ class CanvasClient extends GuzzleHttp\Client
 	 */
 	public $defaultAccount;
 	
-	public function __construct($uri = null, $config = null)
+	public function __construct($uri = null, $defaults = null)
 	{
-		if($config == null)
+		if(is_null($defaults))
 		{
-			$config = array();
+			$defaults = array();
 		}
 		
-		if(!isset($config['useragent']) || empty($config['useragent']))
+		if(!isset($defaults['User-Agent']) || empty($defaults['User-Agent']))
 		{
-			$config['useragent'] = 'OCAD U Canvas API Client';
+			$defaults['User-Agent'] = 'Canvas API Client';
 		}
-		
-		parent::__construct($uri, $config);
-		
 		$token = self::$apiConfig['apiKey'];
-		$this->setHeaders('Authorization', "Bearer $token");
+		$defauts['headers']['Authorization'] = "Bearer ".$token;
+		parent::__construct(['base_uri'=> $uri, 'defaults' => $defaults]);
+		
+
 		$this->defaultAccount = self::$apiConfig['defaultAccount'];
 	}
 	
@@ -55,7 +55,7 @@ class CanvasClient extends GuzzleHttp\Client
 		}
 		
 		// Do JSON decoding
-		$contentType = $response->getHeader('Content-type');
+		$contentType = $response->getHeader('Content-Type');
 		if(stristr($contentType, 'application/json'))
 		{
 			// Decode as array, not stdClass
@@ -67,6 +67,5 @@ class CanvasClient extends GuzzleHttp\Client
 			$e->response = $response;
 			throw $e;
 		}
-		$this->resetParameters();
 	}
 }

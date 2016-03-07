@@ -46,6 +46,6 @@ class CanvasLogin extends CanvasModel
 		);
 		
 		// Make the request to create the user
-		$response = $client->request();
+		$response = $client->request($request);
 	}
 }

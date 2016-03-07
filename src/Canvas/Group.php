@@ -34,7 +34,7 @@ class CanvasGroup extends CanvasModel
 			   ->setParameterPost('is_public', $is_public)
 			   ->setParameterPost('join_level', $join_level)
 			   ->setMethod(Zend_Http_Client::POST);
-		$response = $client->request();
+		$response = $client->send($request);
 		return CanvasGroup::load($response);
 	}
 	
@@ -45,7 +45,7 @@ class CanvasGroup extends CanvasModel
 		{
 			$data = self::_getClient()
 						 ->setEndpoint("groups/$init")
-						 ->request();
+						 ->send($request);
 		}
 		elseif(is_array($init))
 		{
@@ -65,7 +65,7 @@ class CanvasGroup extends CanvasModel
 						 ->setParameterPost('is_public', ($this->is_public) ? 'true':'false')
 						 ->setParameterPost('join_level', $this->join_level)
 						 //->setParameterPost('avatar_id', $this->avatar_id)
-						 ->request();
+						 ->send($request);
 	}
 	
 	protected function _loadFromData($data)
@@ -81,7 +81,7 @@ class CanvasGroup extends CanvasModel
 	{
 		$response = $this->_getClient()
 						 ->setEndpoint("groups/{$this->id}/memberships")
-						 ->request();
+						 ->send($request);
 		$users = array();
 		foreach($response as $membership)
 		{
@@ -97,7 +97,7 @@ class CanvasGroup extends CanvasModel
 		$response = $client->setEndpoint("groups/{$this->id}/memberships")
 						  ->setMethod(Zend_Http_Client::POST)
 						  ->setParameterPost('user_id', $user->id)
-						  ->request();
+						  ->send($request);
 		
 	}
 	*/

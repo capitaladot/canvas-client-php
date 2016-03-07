@@ -44,7 +44,7 @@ class CanvasUser extends CanvasModel
 				$client->setEndpoint("users/sis_user_id:{$init}/profile");
 			}
 			
-			$response = $client->request();
+			$response = $client->send($request);
 			$user->_loadFromData($response);
 		}
 		else 
@@ -83,7 +83,7 @@ class CanvasUser extends CanvasModel
 		$logins = array();
 		$response = self::_getClient()->setMethod(Zend_Http_Client::GET)
 			                      ->setEndpoint('users/'.$this->id.'/logins')
-		 			      ->request();
+		 			      ->send($request);
 		foreach($response as $item)
 		{
 			$logins[] = CanvasLogin::load($item);
@@ -100,7 +100,7 @@ class CanvasUser extends CanvasModel
 		return self::_getClient()->setMethod(Zend_Http_Client::GET)
 								 ->setEndpoint('users/self/todo')
 								 ->setParameterGet('as_user_id', $this->id)
-								 ->request();
+								 ->send($request);
 	}
 	
 	/**
@@ -111,7 +111,7 @@ class CanvasUser extends CanvasModel
 		return self::_getClient()->setMethod(Zend_Http_Client::GET)
 					 ->setEndpoint('users/self/activity_stream')
 					 ->setParameterGet('as_user_id', $this->id)
-					 ->request();
+					 ->send($request);
 	}
 
 	/**
@@ -168,19 +168,19 @@ class CanvasUser extends CanvasModel
 		$client->setParameterPost(
 			array(
 				'user[name]'			=> $user->getRealName(),  	// The full name of the user. This name will be used by teacher for grading.
-				//'pseudonym[unique_id]'	=> $user->getUsername(),	// UserÕs login ID.
-				'pseudonym[unique_id]'		=> $user->getEmail(),		// UserÕs login ID.
-				'pseudonym[sis_user_id]'  	=> $user->getUsername(), 	// [Integer] SIS ID for the userÕs account. To set this parameter, the caller must be able to manage SIS permissions.
+				//'pseudonym[unique_id]'	=> $user->getUsername(),	// Userï¿½s login ID.
+				'pseudonym[unique_id]'		=> $user->getEmail(),		// Userï¿½s login ID.
+				'pseudonym[sis_user_id]'  	=> $user->getUsername(), 	// [Integer] SIS ID for the userï¿½s account. To set this parameter, the caller must be able to manage SIS permissions.
 				'pseudonym[:send_confirmation]'	=> '0',				// 0|1 [Integer] Send user notification of account creation if set to 1.
-				//'user[short_name]'		=> '',				// UserÕs name as it will be displayed in discussions, messages, and comments.
-				//'user[sortable_name]'		=> '',				// UserÕs name as used to sort alphabetically in lists.
-				//'pseudonym[password]'		=> '',				// UserÕs password.
+				//'user[short_name]'		=> '',				// Userï¿½s name as it will be displayed in discussions, messages, and comments.
+				//'user[sortable_name]'		=> '',				// Userï¿½s name as used to sort alphabetically in lists.
+				//'pseudonym[password]'		=> '',				// Userï¿½s password.
 				//'user[time_zone]'		=> '',				// The time zone for the user. Allowed time zones are listed [here](http://rubydoc.info/docs/rails/2.3.8/ActiveSupport/TimeZone).
 			)
 		);
 		
 		// Make the request to create the user
-		$response = $client->request();
+		$response = $client->send($request);
 		$canvasUser = CanvasUser::load($response);
 		
 		// Get the user's logins
@@ -227,6 +227,6 @@ class CanvasUser extends CanvasModel
 					  ->setEndpoint($endpoint)
 					  ->setParameterGet('access_token', null)
 					  ->setHeaders('Authorization', "Bearer $token")
-					  ->request();
+					  ->send($request);
 	}
 }

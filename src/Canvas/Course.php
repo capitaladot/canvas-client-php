@@ -41,7 +41,7 @@ class CanvasCourse extends CanvasModel
 			// $init is an SIS id (string) or Canvas native ID (int). Load from API
 			$client = self::_getClient();
 			$client->setMethod(Zend_Http_Client::GET);
-			
+
 			if(is_int($init))
 			{
 				$client->setEndpoint("courses/$init");
@@ -52,7 +52,7 @@ class CanvasCourse extends CanvasModel
 				$client->setEndpoint("courses/sis_course_id:$init");
 			}
 			
-			$response = $client->request();
+			$response = $client->send();
 			$course->_loadFromData($response);
 		}
 		else 
@@ -91,7 +91,7 @@ class CanvasCourse extends CanvasModel
 		$next = true;
 		while($next)
 		{
-			$response = $client->request();
+			$response = $client->send();
 			foreach($response as $userData)
 			{
 				$user = CanvasUser::load($userData);
@@ -136,7 +136,7 @@ class CanvasCourse extends CanvasModel
 			'course[name]' => $this->name, // required because the request must have at least one "course" param
 		));
 		
-		$client->request();	
+		$client->send();	
 	}
 	
 	public function getStudents()
@@ -209,7 +209,7 @@ class CanvasCourse extends CanvasModel
 			$studentIds[] = $student->id;
 			//$client->setParameterGet('student_ids[]', $student->id);
 		}
-		$response = $client->request();
+		$response = $client->send();
 		$submissions = array();
 		$this->submissions = $submissions;
 		*/
@@ -223,7 +223,7 @@ class CanvasCourse extends CanvasModel
 			$client = self::_getClient();
 			$client->setEndpoint("courses/{$this->id}/sections");
 			//$client->setParameterGet(array('include[]'=>'students'));
-			$response = $client->request();
+			$response = $client->send();
 			Helper::p($response);die;
 		}
 		

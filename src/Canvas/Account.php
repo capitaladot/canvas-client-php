@@ -22,12 +22,11 @@ class CanvasAccount extends CanvasModel
 		{
 			// $init is an account ID
 			$client = self::_getClient();
-			$client->setMethod(Zend_Http_Client::GET);
 			if(is_int($init))
 			{
 				$client->setEndpoint("accounts/$init");
 			}
-			$response = $client->request();
+			$response = $client->send();
 			$account->_loadFromData($response);
 		}
 		else 
@@ -78,7 +77,6 @@ class CanvasAccount extends CanvasModel
 		}
 		
 		$client = self::_getClient();
-		$client->setMethod(Zend_Http_Client::GET);
 		$client->setEndpoint("accounts/{$this->id}/courses");
 		$client->setParameterGet('per_page',50);
 		foreach($states as $state)
@@ -91,7 +89,7 @@ class CanvasAccount extends CanvasModel
 		$next = true;
 		while ($next)
 		{
-			$response = $client->request();
+			$response = $client->send();
 			foreach($response as $courseData)
 			{
 				$courses[] = CanvasCourse::load($courseData);
